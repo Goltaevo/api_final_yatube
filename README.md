@@ -61,3 +61,9 @@ Launch project server:
 ```
 python3 manage.py runserver
 ```
+
+API documentation available in [ReDoc](https://redocly.github.io/redoc/#operation/addPet) on endpoint:
+
+```
+http://127.0.0.1:8000/redoc/
+```
