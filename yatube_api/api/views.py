@@ -2,21 +2,20 @@ from django.shortcuts import get_object_or_404
 from rest_framework import filters
 from rest_framework import mixins
 from rest_framework import permissions
-from rest_framework.response import Response
-from rest_framework import status
 from rest_framework import viewsets
-from rest_framework.exceptions import MethodNotAllowed
 
 from posts.models import Comment, Follow, Group, Post, User
 from .pagination import PostPagination
 from .permissions import AuthorOrReadOnly
-from .serializers import CommentSerializer, FollowSerializer, GroupSerializer, PostSerializer
+from .serializers import (CommentSerializer, FollowSerializer,
+                          GroupSerializer, PostSerializer)
 
 
 class CreateListViewSet(mixins.CreateModelMixin,
                         mixins.ListModelMixin,
                         viewsets.GenericViewSet):
     pass
+
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Group.objects.all()
@@ -28,10 +27,8 @@ class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     permission_classes = [AuthorOrReadOnly]
     filter_backends = (filters.OrderingFilter,)
-    
     pagination_class = PostPagination
     ordering = ('id',)
-
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -42,7 +39,6 @@ class CommentViewSet(viewsets.ModelViewSet):
     permission_classes = [AuthorOrReadOnly]
     filter_backends = (filters.OrderingFilter,)
     ordering = ('id',)
-
 
     def get_queryset(self):
         post_id = self.kwargs.get("post_id")
@@ -74,4 +70,5 @@ class FollowViewSet(CreateListViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
     
