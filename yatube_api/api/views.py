@@ -55,6 +55,7 @@ class CommentViewSet(viewsets.ModelViewSet):
             post=post
         )
 
+
 class FollowViewSet(CreateListViewSet):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = FollowSerializer
@@ -70,5 +71,3 @@ class FollowViewSet(CreateListViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
-
-    
