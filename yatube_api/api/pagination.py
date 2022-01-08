@@ -7,8 +7,8 @@ class PostPagination(LimitOffsetPagination):
         if not self.request.query_params.get('limit'):
             return Response(data)
         return Response({
-            "count": self.count,
+            'count': self.count,
             'next': self.get_next_link(),
             'previous': self.get_previous_link(),
-            "results": data
+            'results': data
         })
